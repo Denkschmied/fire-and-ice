@@ -24,16 +24,16 @@ motorR_PWM = 25
 
 
 #Ultraschall Links
-Trigger = 15
-Echo = 14
+TriggerL = 15
+EchoL = 14
 
 #Ultraschall Mitte
-Trigger = 19
-Echo = 26
+TriggerM = 19
+EchoM = 26
 
 #Ultraschall Rechts
-Trigger = 7
-Echo = 8
+TriggerR = 7
+EchoR = 8
 
 #Flammsensor
 flame_input = 13
