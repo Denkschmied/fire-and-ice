@@ -66,8 +66,4 @@ while True:
 #
 # try:
 #  	while True: # create an infinte loop to keep the script running
-#  	 	time.sleep(0.1)
-#
-
-
-
+#  	    time.sleep(0.1)
