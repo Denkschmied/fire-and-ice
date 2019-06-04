@@ -24,9 +24,7 @@ def readDistance(UsonicE, UsonicT):
     while GPIO.input(UsonicE) == 1:
         StopZeit = time.time()
 
-    # Abstand anhand der Signal-Laufzeit berechnen
-    # Schallgeschwindigkeit: 343,50 m/s (bei 20°C Lufttemperatur)
-    # Formel: /Signallaufzeit in Sekunden * Schallgeschwindigket in cm/s) / 2 (wg. Hin- und Rückweg des Signals)
+
     SignalLaufzeit = StopZeit - StartZeit
     dist = round((SignalLaufzeit / 2) * 34350, 2)
 

@@ -37,9 +37,14 @@ GPIO.setup(cf.rpmR, GPIO.IN)
 # FLAME
 GPIO.setup(cf.flame_input, GPIO.IN)
 
-while true:
-    d.drive(L,F, 30)
-    print(s.readDistance(cf.EchoL,cf.TriggerL))
+while True:
+    try:
+        d.drive("L","F", 30)
+        print(s.readDistance(cf.EchoL,cf.TriggerL))
+    except KeyboardInterrupt:
+        c.stop()
+        GPIO.cleanup()
+        raise Exception, "Ende"
 
 #
 # ### Startposition ###
@@ -66,9 +71,5 @@ while true:
 #         if
 #             else
 #
-# except KeyboardInterrupt:
-#     pass
-#
-# finally:
-#     c.stop()
-#     GPIO.cleanup()
+
+
