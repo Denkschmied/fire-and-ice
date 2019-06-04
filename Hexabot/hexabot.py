@@ -4,15 +4,17 @@
 ###
 ###
 ###
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 import config as cf
 import drive as d
 import sonic as s
-import gyro as g
+#import gyro as g
 
 while true:
     d.drive(L,F, 30)
     print(s.readDistance(cf.EchoL,cf.TriggerL))
-
 
 #
 # ### Startposition ###

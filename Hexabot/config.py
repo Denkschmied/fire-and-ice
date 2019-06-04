@@ -1,7 +1,6 @@
 #FireHead Config-Datei
 #18.05.2019
 #by Fabio Aufinger
-
 #Config angepasst auf Hexabot.
 
 
@@ -42,6 +41,6 @@ flame_input = 13
 rpmL = 12
 rpmR = 18
 radius_rad = 3 #Radius Rad in mm
-Drehscheibe = 20 # Anzahl Löcher Drehscheibe (Standard: 20)
+turns = 20 # Anzahl Löcher Drehscheibe (Standard: 20)
 
 #Gyro
