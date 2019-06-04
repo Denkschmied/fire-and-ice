@@ -39,16 +39,16 @@ GPIO.setup(cf.flame_input, GPIO.IN)
 print("s to start, e to exit, r to return (only after start)")
 while True:
     # Press s to Start
-    try:
-        x = raw_input()
-        if x == 's':
-            d.drive("L", "F", 10)
-            d.drive("R", "F", 10)
-            print(s.readDistance(cf.EchoL, cf.TriggerL))
-        if x == 'r':
-            d.stop("L")
-            d.stop("R")
-    #
+    #try:
+    x = raw_input()
+    if x == 's':
+        d.drive("L", "F", 10)
+        d.drive("R", "F", 10)
+        print(s.readDistance(cf.EchoL, cf.TriggerL))
+    if x == 'r':
+        d.stop("L")
+        d.stop("R")
+
     # except KeyboardInterrupt:
     #     c.stop()
     #     GPIO.cleanup()
