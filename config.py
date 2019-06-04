@@ -31,5 +31,7 @@ flame_input = 9
 #Drehzahlsensoren
 rpmL = 10
 rpmR = 11
+radius_rad = 3 #Radius Rad in mm
+Drehscheibe = 20 # Anzahl Löcher Drehscheibe (Standard: 20)
 
 #Gyro
