@@ -2,7 +2,6 @@
 #03.06.2019
 #by Matteo Hagen
 # Ziel: Geschwindigkeit in Drehungen, m/s + rad/s ausgeben.
-# Ist für
 
 # Definition Anfangsvariablen (GPIO, Radius Rad):
 # ---> Siehe config.py
@@ -11,10 +10,6 @@
 import RPi.GPIO as GPIO
 import config as cf
 import time
-
-Start GPIO
-GPIO.input(cf.rpmL)
-GPIO.input(cf.rpmR)
 
 #Startwert Variablen
 RPMcountL = 0 #Zähler seit letztem Reset
@@ -49,10 +44,11 @@ def rpmL():
         RPMcountL += 1
         totalL += 1
         delta = startL - stopL
-        radsL = (cf.Drehscheibe/4)/delta #/4, da die Geschwindigkeit jeweils bei 4 Umdrehungen ausgegeben wird.
+        radsL = (cf.turns/4)/delta #/4, da die Geschwindigkeit jeweils bei 4 Umdrehungen ausgegeben wird.
         v = (cf.radius_rad*2*pi * radsL)/1000 #Geschwindigkeit in m/s
         return radsL
         return v
+        countL = 0
 
 GPIO.add_event_detect(cf.rpmL, GPIO.FALLING, callback=rpmL)
 
@@ -79,10 +75,11 @@ def rpmR():
         RPMcountR += 1
         totalR += 1
         delta = start - stop
-        radsR = (20/4)/delta
+        radsR = (cf.turns/4)/delta
         v = (cf.radius_rad*2*pi * radsR)/1000 #Geschwindigkeit in m/s
         return radsR
         return v
+        countR = 0
 
 GPIO.add_event_detect(cf.rpmR, GPIO.FALLING, callback=rpmR)
 
