@@ -2,18 +2,14 @@
 #03.06.2019
 #by Matteo Hagen
 # Ziel: Geschwindigkeit in Drehungen, m/s + rad/s ausgeben.
-# Ist für
 
-# Definition Anfangsvariablen (GPIO, Radius Rad):
+# Definition Anfangsvariablen (GPIO, Radius Rad, Drehscheiben Löcher):
 # ---> Siehe config.py
 
 #Import benötigter Dateien / Bibliotheken
 import RPi.GPIO as GPIO
 import config as cf
 import time
-#Start GPIO
-GPIO.setup(cf.rpmL, GPIO.IN)
-GPIO.setup(cf.rpmR, GPIO.IN)
 
 #Startwert Variablen
 RPMcountL = 0 #Zähler seit letztem Reset
@@ -91,7 +87,3 @@ def resetcount():
     RPMcountL = 0
     RPMcountR = 0
     return "RPM Counter (L+R) wurden zurückgesetzt."
-
-
-
-
