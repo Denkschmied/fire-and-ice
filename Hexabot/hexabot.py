@@ -7,7 +7,7 @@
 import time
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(True)
+GPIO.setwarnings(False)
 import config as cf
 #### GPIO setup PINs ###
 # Motor
@@ -38,31 +38,31 @@ GPIO.setup(cf.rpmR, GPIO.IN)
 # FLAME
 GPIO.setup(cf.flame_input, GPIO.IN)
 
+speed = 100
 
-# print("s to start, e to exit, r to return (only after start)")
-# while True:
-#     # Press s to Start
-#     #try:
-#     x = raw_input()
-#     if x == 's':
-#         d.drive("L", "F", 10)
-#         d.drive("R", "F", 10)
-#         print(s.readDistance(cf.EchoL, cf.TriggerL))
-#     if x == 'r':
-#         d.stop("L")
-#         d.stop("R")
-#         GPIO.cleanup()
-#     # except KeyboardInterrupt:
-#     #     c.stop()
-#     #     GPIO.cleanup()
-#     #     raise Exception, "Ende"
+
+
 while True:
-    d.drive("L", "F", 20)
-    # speed = speed + 0.1
-    # print(speed)
-    print("Sonic Links:", s.readDistance(cf.EchoL, cf.TriggerL))
-    print("Sonic Mitte:", s.readDistance(cf.EchoM, cf.TriggerM))
-    print("Sonic Rechts:", s.readDistance(cf.EchoR, cf.TriggerR))
+    #if s.readDistance(cf.EchoM, cf.TriggerL) < 30 and s.readDistance(cf.EchoM, cf.TriggerL) > 20:
+        #speed = speed - 30
+    #if s.readDistance(cf.EchoM, cf.TriggerL) < 20 and s.readDistance(cf.EchoM, cf.TriggerL) > 10:
+        #speed = speed - 50
+    print("s to start, e to exit, a to abort, r to return (only after start)")
+    x = raw_input()
+    if x == 's':
+        d.drive("B", "F", 20, 20)
+    if x == 'a':
+        d.stop("L")
+        d.stop("R")
+    if x == 'e':
+        d.stop("L")
+        d.stop("R")
+        GPIO.cleanup()
+    # except KeyboardInterrupt:
+    #     c.stop()
+    #     GPIO.cleanup()
+    #     raise Exception, "Ende"
+
 
 
 # finally:

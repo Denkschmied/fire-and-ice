@@ -10,14 +10,14 @@ YLimits = (0, 10)
 steps = 0.1
 
 #Motoren-Richtung
-motorL_forward = 16
-motorL_backward = 20
-motorR_forward = 23
-motorR_backward = 24
+motorL_forward = 23
+motorL_backward = 24
+motorR_forward = 16
+motorR_backward = 20
 
 #Motoren-PWM
-motorL_PWM = 21
-motorR_PWM = 25
+motorL_PWM = 25
+motorR_PWM = 21
 
 #Kamera
 
