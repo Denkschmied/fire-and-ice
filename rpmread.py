@@ -83,7 +83,7 @@ def countR(var):
     
 def resetR():
     global rpm, timerR, counterR
-    rpm[0]=0;
+    rpm[1]=0;
     timerR=0;
     counterR=0;
     
