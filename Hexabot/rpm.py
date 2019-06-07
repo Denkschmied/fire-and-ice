@@ -47,6 +47,21 @@ def rpmL():
         radsL = (cf.turns/4)/delta #/4, da die Geschwindigkeit jeweils bei 4 Umdrehungen ausgegeben wird.
         v = (cf.radius_rad*2*pi * radsL)/1000 #Geschwindigkeit in m/s
         return radsL
+        countL = 0
+
+def rpmLv():
+
+    if countL<=3:
+        t_startL()
+        countL += 1
+
+    if countL > 3:
+        t_stopL()
+        RPMcountL += 1
+        totalL += 1
+        delta = startL - stopL
+        radsL = (cf.turns/4)/delta #/4, da die Geschwindigkeit jeweils bei 4 Umdrehungen ausgegeben wird.
+        v = (cf.radius_rad*2*pi * radsL)/1000 #Geschwindigkeit in m/s
         return v
         countL = 0
 
@@ -78,6 +93,21 @@ def rpmR():
         radsR = (cf.turns/4)/delta
         v = (cf.radius_rad*2*pi * radsR)/1000 #Geschwindigkeit in m/s
         return radsR
+        countR = 0
+
+def rpmRv():
+
+    if countR<=3:
+        t_startL()
+        countL += 1
+
+    if countR > 3:
+        t_stopR()
+        RPMcountR += 1
+        totalR += 1
+        delta = start - stop
+        radsR = (cf.turns/4)/delta
+        v = (cf.radius_rad*2*pi * radsR)/1000 #Geschwindigkeit in m/s
         return v
         countR = 0
 

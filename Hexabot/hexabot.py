@@ -21,6 +21,7 @@ GPIO.setup(cf.motorR_backward, GPIO.OUT)
 
 import drive as d
 import sonic as s
+import rpm as r
 #import gyro as g
 
 # Ultraschall
@@ -38,11 +39,16 @@ GPIO.setup(cf.rpmR, GPIO.IN)
 # FLAME
 GPIO.setup(cf.flame_input, GPIO.IN)
 
-speed = 100
-
-
+speed = 5 #Umdrehungen pro Sekunde
+PWML = 0
+PWMR = 0
 
 while True:
+    deltavL = speed - r.rpmL()
+    deltavR = speed - r.rpmR()
+    PWML = PWML + deltavL
+    PWMR = PWMR + deltavR
+
     #if s.readDistance(cf.EchoM, cf.TriggerL) < 30 and s.readDistance(cf.EchoM, cf.TriggerL) > 20:
         #speed = speed - 30
     #if s.readDistance(cf.EchoM, cf.TriggerL) < 20 and s.readDistance(cf.EchoM, cf.TriggerL) > 10:
@@ -50,7 +56,7 @@ while True:
     print("s to start, e to exit, a to abort, r to return (only after start)")
     x = raw_input()
     if x == 's':
-        d.drive("B", "F", 20, 20)
+        d.drive("B", "F", PWML, PWMR)
     if x == 'a':
         d.stop("L")
         d.stop("R")
