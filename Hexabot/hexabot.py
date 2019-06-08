@@ -38,6 +38,11 @@ import sonic as s
 # FLAME
 GPIO.setup(cf.flame_input, GPIO.IN)
 
+# Multithread
+from _thread import start_new_thread
+
+start_new_thread(led.LED, ())
+
 ##################################
 #VAR
 ##################################
@@ -48,7 +53,7 @@ PWMR = 0
 ##################################
 #MAIN
 ##################################
-led.LED()
+
 
 while True:
     deltavL = speed - r.rpmL()
