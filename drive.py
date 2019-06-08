@@ -8,9 +8,10 @@ import config
 PWML = GPIO.PWM(config.motorL_PWM, 20)
 PWMR = GPIO.PWM(config.motorR_PWM, 20)
 
+PWML.start(0)
+PWMR.start(0)
+    
 def drive(motor, direction, speed):
-    PWML.start(0)
-    PWMR.start(0)
 
     if motor == "L" and direction == "F":
         GPIO.output(config.motorL_backward, False)
