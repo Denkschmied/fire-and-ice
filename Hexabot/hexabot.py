@@ -1,15 +1,13 @@
-### Start/Stop
-###
-###
-###
-###
-###
+##################################
+#INIT
+##################################
+
 import time
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 import config as cf
-#### GPIO setup PINs ###
+#### GPIO setup PINs und Import Module ###
 # Motor
 GPIO.setup(cf.motorL_PWM, GPIO.OUT)
 GPIO.setup(cf.motorL_forward, GPIO.OUT)
@@ -18,11 +16,15 @@ GPIO.setup(cf.motorL_backward, GPIO.OUT)
 GPIO.setup(cf.motorR_PWM, GPIO.OUT)
 GPIO.setup(cf.motorR_forward, GPIO.OUT)
 GPIO.setup(cf.motorR_backward, GPIO.OUT)
-
 import drive as d
-import sonic as s
+
+# RPM
+GPIO.setup(cf.rpmL, GPIO.IN)
+GPIO.setup(cf.rpmR, GPIO.IN)
 import rpm as r
-#import gyro as g
+
+# LED
+import led
 
 # Ultraschall
 GPIO.setup(cf.TriggerL, GPIO.OUT)
@@ -31,17 +33,22 @@ GPIO.setup(cf.TriggerM, GPIO.OUT)
 GPIO.setup(cf.EchoM, GPIO.IN)
 GPIO.setup(cf.TriggerR, GPIO.OUT)
 GPIO.setup(cf.EchoR, GPIO.IN)
-
-# RPM
-GPIO.setup(cf.rpmL, GPIO.IN)
-GPIO.setup(cf.rpmR, GPIO.IN)
+import sonic as s
 
 # FLAME
 GPIO.setup(cf.flame_input, GPIO.IN)
 
+##################################
+#VAR
+##################################
 speed = 5 #Umdrehungen pro Sekunde
 PWML = 0
 PWMR = 0
+
+##################################
+#MAIN
+##################################
+led.LED()
 
 while True:
     deltavL = speed - r.rpmL()
