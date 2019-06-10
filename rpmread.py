@@ -54,7 +54,7 @@ def countL(var):
     if counterL >= 2:
         dt=getTime()-timerL
         ds=counterL/cf.Drehscheibe
-        rpm[0]+=ds/dt * 60 # U pro Minute
+        rpm[0]=ds/dt * 60 # U pro Minute
         counterL=0
         timerL=getTime()
     else:        
@@ -75,7 +75,7 @@ def countR(var):
     if counterR >= 2:
         dt=getTime()-timerR
         ds=counterR/cf.Drehscheibe
-        rpm[1]+=ds/dt * 60 # U pro Minute
+        rpm[1]=ds/dt * 60 # U pro Minute
         counterR=0
         timerR=getTime()
     else:        
