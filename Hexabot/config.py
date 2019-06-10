@@ -41,6 +41,6 @@ flame_input = 13
 rpmL = 12
 rpmR = 18
 radius_rad = 3 #Radius Rad in mm
-turns = 20 # Anzahl Loecher Drehscheibe (Standard: 20)
+Drehscheibe = 20 # Anzahl Loecher Drehscheibe (Standard: 20)
 
 #Gyro

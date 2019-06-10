@@ -18,7 +18,7 @@ def drive(directionL, directionR, speedL, speedR):
         GPIO.output(config.motorR_backward, False)
         GPIO.output(config.motorR_forward, True)
         PWML.ChangeDutyCycle(speedL)
-        PWML.ChangeDutyCycle(speedR)
+        PWMR.ChangeDutyCycle(speedR)
 
     if directionL == "F" and directionR == "B":
         GPIO.output(config.motorL_forward, True)
@@ -26,7 +26,7 @@ def drive(directionL, directionR, speedL, speedR):
         GPIO.output(config.motorR_forward, False)
         GPIO.output(config.motorR_backward, True)
         PWML.ChangeDutyCycle(speedL)
-        PWML.ChangeDutyCycle(speedR)
+        PWMR.ChangeDutyCycle(speedR)
 
     if directionL == "B" and directionR == "B":
         GPIO.output(config.motorL_forward, False)
@@ -34,7 +34,7 @@ def drive(directionL, directionR, speedL, speedR):
         GPIO.output(config.motorR_forward, False)
         GPIO.output(config.motorR_backward, True)
         PWML.ChangeDutyCycle(speedL)
-        PWML.ChangeDutyCycle(speedR)
+        PWMR.ChangeDutyCycle(speedR)
 
     if directionL == "B" and directionR == "F":
         GPIO.output(config.motorL_forward, False)
@@ -42,7 +42,7 @@ def drive(directionL, directionR, speedL, speedR):
         GPIO.output(config.motorR_forward, True)
         GPIO.output(config.motorR_backward, False)
         PWML.ChangeDutyCycle(speedL)
-        PWML.ChangeDutyCycle(speedR)
+        PWMR.ChangeDutyCycle(speedR)
 
 def stop(motor):
     if motor == "L":

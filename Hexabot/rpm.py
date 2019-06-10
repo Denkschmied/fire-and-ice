@@ -1,119 +1,94 @@
+#rpmreader v2
+# by mausausdruck1. 06.06.19
+#
+#teilweise angelehnt auf dem Code von
 #FireHead RPM-Modul
 #03.06.2019
 #by Matteo Hagen
-# Ziel: Geschwindigkeit in Drehungen, m/s + rad/s ausgeben.
 
-# Definition Anfangsvariablen (GPIO, Radius Rad, Drehscheiben Löcher):
-# ---> Siehe config.py
 
-#Import benötigter Dateien / Bibliotheken
+### USAGE
+
+# 1. Setup conf
+# 2. include modules + rpminit()
+# 3. get you RPM via rpmread.rpm as list (left, right) 
+# 4. if you change your drive direction call rpmread.resetL() or rpmread.resetR()
+
+# (un) commend gpio Setmode in some case!
+
+###
+
+
 import RPi.GPIO as GPIO
 import config as cf
 import time
+import sys
 
-#Startwert Variablen
-RPMcountL = 0 #Zähler seit letztem Reset
-RPMcountR = 0 #Zähler seit letztem Reset
+counterL=0
+timerL=0
+timerR=0
+counterR=0
 
-totalL = 0 #Gesamtzähler über die gesamte Fahrt
-totalR = 0 #Gesamtzähler über die gesamte Fahrt
+rpm=[0,0] #rpm L/R
 
-countL = 0 #Wird nur temporär verwendet
-countR = 0 #Wird nur temporär verwendet
+def rpminit():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(cf.rpmL, GPIO.IN) 
+    GPIO.add_event_detect(cf.rpmL, GPIO.FALLING, callback=countL)    
+    GPIO.setup(cf.rpmR, GPIO.IN) 
+    GPIO.add_event_detect(cf.rpmR, GPIO.FALLING, callback=countR)
+    
+def getTime():
+    if sys.version_info < (3,7,0):
+        return time.time()
+    else:
+        return time.time_ns() / (10 ** 9) # genauere Zeit ab 3.7 in s float
+    
 
-##################
-### Linkes Rad ###
-##################
+def countL(var):
+    global counterL, rpm, timerL
+    
+    if timerL==0:## init
+        timerL=getTime()       
+        
+    if counterL >= 2:
+        dt=getTime()-timerL
+        ds=counterL/cf.Drehscheibe
+        rpm[0]=ds/dt * 60 # U pro Minute
+        counterL=0
+        timerL=getTime()
+    else:        
+        counterL=counterL+1
+    
+def resetL():
+    global rpm, timerL, counterL
+    rpm[0]=0;
+    timerL=0;
+    counterL=0;
 
-def t_startL():
-    global startL
-    startL = start.time()
+def countR(var):
+    global counterR, rpm, timerR
+    
+    if timerR==0:## init
+        timerR=getTime()       
+        
+    if counterR >= 2:
+        dt=getTime()-timerR
+        ds=counterR/cf.Drehscheibe
+        rpm[1]=ds/dt * 60 # U pro Minute
+        counterR=0
+        timerR=getTime()
+    else:        
+        counterR=counterR+1
+    
+def resetR():
+    global rpm, timerR, counterR
+    rpm[1]=0;
+    timerR=0;
+    counterR=0;
+    
 
-def t_stopL():
-    global stopL
-    stopL = stop.time()
+# Test
 
-def rpmL():
-
-    if countL<=3:
-        t_startL()
-        countL += 1
-
-    if countL > 3:
-        t_stopL()
-        RPMcountL += 1
-        totalL += 1
-        delta = startL - stopL
-        radsL = (cf.turns/4)/delta #/4, da die Geschwindigkeit jeweils bei 4 Umdrehungen ausgegeben wird.
-        v = (cf.radius_rad*2*pi * radsL)/1000 #Geschwindigkeit in m/s
-        return radsL
-        countL = 0
-
-def rpmLv():
-
-    if countL<=3:
-        t_startL()
-        countL += 1
-
-    if countL > 3:
-        t_stopL()
-        RPMcountL += 1
-        totalL += 1
-        delta = startL - stopL
-        radsL = (cf.turns/4)/delta #/4, da die Geschwindigkeit jeweils bei 4 Umdrehungen ausgegeben wird.
-        v = (cf.radius_rad*2*pi * radsL)/1000 #Geschwindigkeit in m/s
-        return v
-        countL = 0
-
-GPIO.add_event_detect(cf.rpmL, GPIO.FALLING, callback=rpmL)
-
-###################
-### Rechtes Rad ###
-###################
-
-def t_startR():
-    global startR
-    startR = start.time()
-
-def t_stopR():
-    global stopR
-    stopR = stop.time()
-
-def rpmR():
-
-    if countR<=3:
-        t_startL()
-        countL += 1
-
-    if countR > 3:
-        t_stopR()
-        RPMcountR += 1
-        totalR += 1
-        delta = start - stop
-        radsR = (cf.turns/4)/delta
-        v = (cf.radius_rad*2*pi * radsR)/1000 #Geschwindigkeit in m/s
-        return radsR
-        countR = 0
-
-def rpmRv():
-
-    if countR<=3:
-        t_startL()
-        countL += 1
-
-    if countR > 3:
-        t_stopR()
-        RPMcountR += 1
-        totalR += 1
-        delta = start - stop
-        radsR = (cf.turns/4)/delta
-        v = (cf.radius_rad*2*pi * radsR)/1000 #Geschwindigkeit in m/s
-        return v
-        countR = 0
-
-GPIO.add_event_detect(cf.rpmR, GPIO.FALLING, callback=rpmR)
-
-def resetcount():
-    RPMcountL = 0
-    RPMcountR = 0
-    return "RPM Counter (L+R) wurden zurückgesetzt."
+#while True:
+   # print(rpm)

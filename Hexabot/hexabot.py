@@ -19,9 +19,8 @@ GPIO.setup(cf.motorR_backward, GPIO.OUT)
 import drive as d
 
 # RPM
-GPIO.setup(cf.rpmL, GPIO.IN)
-GPIO.setup(cf.rpmR, GPIO.IN)
 import rpm as r
+r.rpminit()
 
 # LED
 import led
@@ -46,36 +45,65 @@ start_new_thread(led.LED, ())
 ##################################
 #VAR
 ##################################
-speed = 5 #Umdrehungen pro Sekunde
-PWML = 0
-PWMR = 0
+speed = 100.0 #Umdrehungen pro Sekunde
+PWML = 1.0
+PWMR = 1.0
 
 ##################################
 #MAIN
 ##################################
 
-
 while True:
-    deltavL = speed - r.rpmL()
-    deltavR = speed - r.rpmR()
-    PWML = PWML + deltavL
-    PWMR = PWMR + deltavR
+    deltavL = speed - r.rpm[0]
+
+    if deltavL >= 0:
+        PWML = PWML + 0.5
+        if PWML > 100:
+            PWML = PWML - 0.5
+    elif deltavL < 0:
+        PWML = PWML - 0.5
+        if PWML < 0:
+            PWML = PWML + 0.5
+
+            
+    deltavR = speed - r.rpm[1]
+
+    if deltavR < 0:
+        PWMR = PWMR - 0.5
+        if PWMR > 100:
+            PWMR = PWMR - 0.5
+    elif deltavR >= 0:
+        PWMR = PWMR + 0.5
+        if PWMR < 0:
+            PWMR = PWMR + 0.5
+            
+    d.drive("F", "F", PWML, PWMR)
+
+    print(r.rpm, end='\r')
+    print("deltavL:",deltavL, end='\r')
+    print("PWML:",PWML, end='\r')
+    print("deltavR:",deltavR, end='\r')
+    print("PWMR:", PWMR, end='\r')
+
+    
+
+
 
     #if s.readDistance(cf.EchoM, cf.TriggerL) < 30 and s.readDistance(cf.EchoM, cf.TriggerL) > 20:
         #speed = speed - 30
     #if s.readDistance(cf.EchoM, cf.TriggerL) < 20 and s.readDistance(cf.EchoM, cf.TriggerL) > 10:
         #speed = speed - 50
-    print("s to start, e to exit, a to abort, r to return (only after start)")
-    x = raw_input()
-    if x == 's':
-        d.drive("B", "F", PWML, PWMR)
-    if x == 'a':
-        d.stop("L")
-        d.stop("R")
-    if x == 'e':
-        d.stop("L")
-        d.stop("R")
-        GPIO.cleanup()
+##    print("s to start, e to exit, a to abort, r to return (only after start)")
+##    x = raw_input()
+##    if x == 's':
+##        d.drive("B", "F", 50, 50)
+##    if x == 'a':
+##        d.stop("L")
+##        d.stop("R")
+##    if x == 'e':
+##        d.stop("L")
+##        d.stop("R")
+##        GPIO.cleanup()
     # except KeyboardInterrupt:
     #     c.stop()
     #     GPIO.cleanup()
