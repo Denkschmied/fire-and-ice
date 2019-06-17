@@ -1,0 +1,16 @@
+#Matlab Code für den Datenaustausch. 
+#Sourec: Mathworks.de
+#17.06.2019
+
+
+*Konfigurieren RPi*
+mypi=raspi('192.168.18.84', 'pi', 'SPS2018')
+
+*File vom RPi holen*
+getFile(mypi,'source')
+#source =zB '/home/pi/config.py'
+
+*File an RPi senden*
+putFile(mypi,'source','destination')
+#source = zB 'D:\FH_Kufstein\ModelBasedAnalytics\LSM9DS0.pdf',
+#destination = zB '/home/pi/'
